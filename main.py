@@ -1,6 +1,6 @@
 """
-Daily Tracker Bot â WhatsApp â Whisper â GPT â Google Sheets
-Soporta mÃºltiples usuarios, sistema de puntos y leaderboard.
+Daily Tracker Bot Ã¢ÂÂ WhatsApp Ã¢ÂÂ Whisper Ã¢ÂÂ GPT Ã¢ÂÂ Google Sheets
+Soporta mÃÂºltiples usuarios, sistema de puntos y leaderboard.
 """
 
 import os
@@ -17,9 +17,9 @@ from openai import OpenAI
 import gspread
 from google.oauth2.service_account import Credentials
 
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 # Variables de entorno
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 OPENAI_API_KEY     = os.environ["OPENAI_API_KEY"]
 TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"].strip()
 TWILIO_AUTH_TOKEN  = os.environ["TWILIO_AUTH_TOKEN"].strip()
@@ -27,13 +27,13 @@ GOOGLE_CREDS_JSON  = os.environ["GOOGLE_CREDS_JSON"]
 SPREADSHEET_ID     = os.environ["SPREADSHEET_ID"]
 DASHBOARD_PASSWORD = os.environ.get("DASHBOARD_PASSWORD", "tracker123")
 
-# JSON con los nÃºmeros autorizados y sus nombres
+# JSON con los nÃÂºmeros autorizados y sus nombres
 # Ejemplo: {"whatsapp:+5491112345678": "Nico", "whatsapp:+5491187654321": "Fede"}
 USUARIOS: dict = json.loads(os.environ.get("USUARIOS_JSON", "{}"))
 
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-# Sistema de puntos â editÃ¡ estos valores para personalizar
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+# Sistema de puntos Ã¢ÂÂ editÃÂ¡ estos valores para personalizar
+# Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 PUNTOS = {
     "suenio_por_hora":   1,
     "suenio_max_horas":  8,
@@ -78,9 +78,9 @@ security = HTTPBasic()
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 SHEET_HEADERS = [
-    "Fecha", "Usuario", "Horas sueÃ±o", "Gym", "Calidad entreno",
-    "EstudiÃ©", "Horas estudio", "TrabajÃ©", "Horas trabajo", "Calidad trabajo",
-    "Comidas", "LeÃ­", "Puntos", "Notas", "TranscripciÃ³n", "Timestamp"
+    "Fecha", "Usuario", "Horas sueÃÂ±o", "Gym", "Calidad entreno",
+    "EstudiÃÂ©", "Horas estudio", "TrabajÃÂ©", "Horas trabajo", "Calidad trabajo",
+    "Comidas", "LeÃÂ­", "Puntos", "Notas", "TranscripciÃÂ³n", "Timestamp"
 ]
 
 
@@ -122,21 +122,21 @@ async def transcribe_audio(media_url: str) -> str:
 
 
 EXTRACTION_PROMPT = """
-Sos un asistente que extrae datos de un registro diario personal en espaÃ±ol rioplatense.
-A partir del texto, extraÃ© los datos en JSON con exactamente estos campos:
+Sos un asistente que extrae datos de un registro diario personal en espaÃÂ±ol rioplatense.
+A partir del texto, extraÃÂ© los datos en JSON con exactamente estos campos:
 
 {{
   "fecha": "YYYY-MM-DD (hoy si no se menciona)",
-  "horas_suenio": nÃºmero decimal o null,
+  "horas_suenio": nÃÂºmero decimal o null,
   "gym": true/false,
   "calidad_entrenamiento": "bien"|"normal"|"mal"|null,
   "estudie": true/false,
-  "horas_estudio": nÃºmero decimal o null,
+  "horas_estudio": nÃÂºmero decimal o null,
   "trabaje": true/false,
-  "horas_trabajo": nÃºmero decimal o null,
+  "horas_trabajo": nÃÂºmero decimal o null,
   "calidad_trabajo": "bien"|"normal"|"mal"|null,
-  "comidas": nÃºmero entero o null,
-  "lei": true/false (Â¿leyÃ³ algo? libro, artÃ­culos, etc.),
+  "comidas": nÃÂºmero entero o null,
+  "lei": true/false (ÃÂ¿leyÃÂ³ algo? libro, artÃÂ­culos, etc.),
   "notas": "texto extra relevante" o null
 }}
 
@@ -165,7 +165,7 @@ def extract_data(transcription: str) -> dict:
 
 
 def bool_str(v):
-    if v is True:  return "SÃ­"
+    if v is True:  return "SÃÂ­"
     if v is False: return "No"
     return ""
 
@@ -208,7 +208,7 @@ async def webhook(
 ):
     twiml = MessagingResponse()
     if USUARIOS and From not in USUARIOS:
-        twiml.message("â Tu nÃºmero no estÃ¡ autorizado. Pedile al admin que te agregue.")
+        twiml.message("Ã¢ÂÂ Tu nÃÂºmero no estÃÂ¡ autorizado. Pedile al admin que te agregue.")
         return HTMLResponse(content=str(twiml), media_type="application/xml")
     usuario = USUARIOS.get(From, From)
     try:
@@ -217,34 +217,34 @@ async def webhook(
         elif Body.strip():
             transcription = Body.strip()
         else:
-            twiml.message("ðï¸ Mandame un audio o texto con tu registro del dÃ­a.")
+            twiml.message("Ã°ÂÂÂÃ¯Â¸Â Mandame un audio o texto con tu registro del dÃÂ­a.")
             return HTMLResponse(content=str(twiml), media_type="application/xml")
         data   = extract_data(transcription)
         puntos = calcular_puntos(data)
         save_to_sheet(data, transcription, usuario, puntos)
-        gym_txt   = "â Gym" if data.get("gym") else "â Sin gym"
-        study_txt = "â EstudiÃ©" if data.get("estudie") else "â No estudiÃ©"
-        work_txt  = "â TrabajÃ©" if data.get("trabaje") else "â No trabajÃ©"
-        lei_txt   = "ð LeÃ­" if data.get("lei") else ""
+        gym_txt   = "Ã¢ÂÂ Gym" if data.get("gym") else "Ã¢ÂÂ Sin gym"
+        study_txt = "Ã¢ÂÂ EstudiÃÂ©" if data.get("estudie") else "Ã¢ÂÂ No estudiÃÂ©"
+        work_txt  = "Ã¢ÂÂ TrabajÃÂ©" if data.get("trabaje") else "Ã¢ÂÂ No trabajÃÂ©"
+        lei_txt   = "Ã°ÂÂÂ LeÃÂ­" if data.get("lei") else ""
         lines = [
-            f"ð *+{puntos} pts â Registro del {data.get('fecha')} guardado*\n",
-            f"ð´ SueÃ±o: {data.get('horas_suenio') or '?'}h",
+            f"Ã°ÂÂÂ *+{puntos} pts Ã¢ÂÂ Registro del {data.get('fecha')} guardado*\n",
+            f"Ã°ÂÂÂ´ SueÃÂ±o: {data.get('horas_suenio') or '?'}h",
             gym_txt + (f" ({data.get('calidad_entrenamiento')})" if data.get("calidad_entrenamiento") else ""),
-            study_txt + (f" â {data.get('horas_estudio')}h" if data.get("horas_estudio") else ""),
+            study_txt + (f" Ã¢ÂÂ {data.get('horas_estudio')}h" if data.get("horas_estudio") else ""),
             work_txt + (f" ({data.get('calidad_trabajo')})" if data.get("calidad_trabajo") else ""),
-            f"ð½ï¸ Comidas: {data.get('comidas') or '?'}",
+            f"Ã°ÂÂÂ½Ã¯Â¸Â Comidas: {data.get('comidas') or '?'}",
         ]
         if lei_txt: lines.append(lei_txt)
-        if data.get("notas"): lines.append(f"ð {data['notas']}")
+        if data.get("notas"): lines.append(f"Ã°ÂÂÂ {data['notas']}")
         twiml.message("\n".join(lines))
     except Exception as e:
-        twiml.message(f"â ï¸ Error: {str(e)[:200]}")
+        twiml.message(f"Ã¢ÂÂ Ã¯Â¸Â Error: {str(e)[:200]}")
     return HTMLResponse(content=str(twiml), media_type="application/xml")
 
 
 def verify_password(credentials: HTTPBasicCredentials = Depends(security)):
     if not secrets.compare_digest(credentials.password, DASHBOARD_PASSWORD):
-        raise HTTPException(status_code=401, detail="ContraseÃ±a incorrecta",
+        raise HTTPException(status_code=401, detail="ContraseÃÂ±a incorrecta",
                             headers={"WWW-Authenticate": "Basic"})
     return credentials
 
@@ -297,6 +297,31 @@ def get_config(_=Depends(verify_password)):
     )
     return JSONResponse(content={"puntos": PUNTOS, "max_por_dia": max_pts})
 
+
+@app.get("/debug")
+def debug():
+    import requests as _req
+    sid = TWILIO_ACCOUNT_SID
+    token = TWILIO_AUTH_TOKEN
+    try:
+        r = _req.get(
+            f"https://api.twilio.com/2010-04-01/Accounts/{sid}.json",
+            auth=(sid, token), timeout=10
+        )
+        twilio_ok = r.status_code == 200
+        twilio_status = r.status_code
+    except Exception as e:
+        twilio_ok = False
+        twilio_status = str(e)
+    return {
+        "sid_preview": sid[:4] + "..." + sid[-4:] if len(sid) > 8 else "SHORT",
+        "token_preview": token[:4] + "..." + token[-4:] if len(token) > 8 else "SHORT",
+        "sid_len": len(sid), "token_len": len(token),
+        "sid_starts_AC": sid.startswith("AC"),
+        "token_len_ok": len(token) == 32,
+        "twilio_auth_ok": twilio_ok,
+        "twilio_status": twilio_status,
+    }
 
 @app.get("/health")
 def health():
@@ -409,7 +434,7 @@ tr:last-child td{border-bottom:none}
 </head>
 <body>
 <header>
-  <span style="font-size:1.4rem">ð</span>
+  <span style="font-size:1.4rem">Ã°ÂÂÂ</span>
   <h1>Daily Tracker</h1>
   <div class="user-pill" id="hdr-user">
     <div class="user-avatar" id="hdr-avatar">?</div>
@@ -424,19 +449,19 @@ tr:last-child td{border-bottom:none}
       <div class="hz-row">
         <div class="card-title">Puntos</div>
         <div class="hz-btns">
-          <button class="hz-btn active" onclick="setHorizon('dias',this)">DÃ­as</button>
+          <button class="hz-btn active" onclick="setHorizon('dias',this)">DÃÂ­as</button>
           <button class="hz-btn" onclick="setHorizon('semanas',this)">Sem</button>
           <button class="hz-btn" onclick="setHorizon('meses',this)">Mes</button>
         </div>
       </div>
       <canvas id="main-pts-chart" style="max-height:200px"></canvas>
     </div>
-    <p class="tip">ð¡ TocÃ¡ una mÃ©trica para ver el detalle</p>
+    <p class="tip">Ã°ÂÂÂ¡ TocÃÂ¡ una mÃÂ©trica para ver el detalle</p>
     <div class="metric-grid" id="metric-cards"></div>
     <div id="drill-card" class="card" style="display:none">
       <div class="drill-header">
         <span class="drill-title" id="drill-title"></span>
-        <button class="drill-close" onclick="closeDrill()">â</button>
+        <button class="drill-close" onclick="closeDrill()">Ã¢ÂÂ</button>
       </div>
       <canvas id="drill-chart" style="max-height:180px"></canvas>
     </div>
@@ -445,8 +470,8 @@ tr:last-child td{border-bottom:none}
     <div class="lb-period" id="lb-period-btns">
       <button class="period-btn active" onclick="setPeriod('esta_semana',this)">Esta semana</button>
       <button class="period-btn" onclick="setPeriod('este_mes',this)">Este mes</button>
-      <button class="period-btn" onclick="setPeriod('este_anio',this)">Este aÃ±o</button>
-      <button class="period-btn" onclick="setPeriod('total',this)">HistÃ³rico</button>
+      <button class="period-btn" onclick="setPeriod('este_anio',this)">Este aÃÂ±o</button>
+      <button class="period-btn" onclick="setPeriod('total',this)">HistÃÂ³rico</button>
     </div>
     <div id="lb-grid"></div>
   </div>
@@ -454,7 +479,7 @@ tr:last-child td{border-bottom:none}
     <div class="user-bar" id="user-bar-compare"></div>
     <div class="cmp-grid" id="cmp-cards"></div>
     <div class="card">
-      <div class="card-title">Puntos acumulados â 30 dÃ­as</div>
+      <div class="card-title">Puntos acumulados Ã¢ÂÂ 30 dÃÂ­as</div>
       <canvas id="cmp-chart" style="max-height:200px"></canvas>
     </div>
   </div>
@@ -463,7 +488,7 @@ tr:last-child td{border-bottom:none}
     <div class="card">
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th>Fecha</th><th>Pts</th><th>SueÃ±o</th><th>Gym</th><th>Estudio</th><th>Trabajo</th><th>Comidas</th><th>LeÃ­</th><th>Notas</th></tr></thead>
+          <thead><tr><th>Fecha</th><th>Pts</th><th>SueÃÂ±o</th><th>Gym</th><th>Estudio</th><th>Trabajo</th><th>Comidas</th><th>LeÃÂ­</th><th>Notas</th></tr></thead>
           <tbody id="hist-tbody"></tbody>
         </table>
       </div>
@@ -472,16 +497,16 @@ tr:last-child td{border-bottom:none}
 </main>
 <nav class="bottom-nav">
   <button class="nav-item active" onclick="showTab('personal',this)">
-    <span class="nav-icon">ð</span><span class="nav-lbl">Tracker</span>
+    <span class="nav-icon">Ã°ÂÂÂ</span><span class="nav-lbl">Tracker</span>
   </button>
   <button class="nav-item" onclick="showTab('leaderboard',this)">
-    <span class="nav-icon">ð</span><span class="nav-lbl">Ranking</span>
+    <span class="nav-icon">Ã°ÂÂÂ</span><span class="nav-lbl">Ranking</span>
   </button>
   <button class="nav-item" onclick="showTab('comparar',this)">
-    <span class="nav-icon">ð</span><span class="nav-lbl">Comparar</span>
+    <span class="nav-icon">Ã°ÂÂÂ</span><span class="nav-lbl">Comparar</span>
   </button>
   <button class="nav-item" onclick="showTab('historial',this)">
-    <span class="nav-icon">ð</span><span class="nav-lbl">Historial</span>
+    <span class="nav-icon">Ã°ÂÂÂ</span><span class="nav-lbl">Historial</span>
   </button>
 </nav>
 <script>
@@ -540,9 +565,9 @@ const weekKey=d=>{const dt=new Date(d+'T12:00:00');dt.setDate(dt.getDate()-(dt.g
 const monthKey=d=>d.slice(0,7);
 
 function badge(v){
-  if(v==='SÃ­') return `<span class="badge si">SÃ­</span>`;
+  if(v==='SÃÂ­') return `<span class="badge si">SÃÂ­</span>`;
   if(v==='No') return `<span class="badge no">No</span>`;
-  return 'â';
+  return 'Ã¢ÂÂ';
 }
 
 function mkChart(id,type,data,opts={}){
@@ -579,12 +604,12 @@ function aggregateData(rows,getValue,reduce='sum'){
 }
 
 const METRICS=[
-  {key:'suenio',icon:'ð´',label:'SueÃ±o',color:'#8b7fff',getValue:r=>parseFloat(r['Horas sueÃ±o'])||null,reduce:'avg',unit:'hs',yMax:12},
-  {key:'gym',icon:'ðï¸',label:'Gym',color:'#34d399',getValue:r=>r['Gym']==='SÃ­'?1:0,reduce:'sum',unit:'dÃ­as'},
-  {key:'estudio',icon:'ð',label:'Estudio',color:'#60a5fa',getValue:r=>parseFloat(r['Horas estudio'])||null,reduce:'sum',unit:'hs'},
-  {key:'trabajo',icon:'ð¼',label:'Trabajo',color:'#e879f9',getValue:r=>parseFloat(r['Horas trabajo'])||null,reduce:'sum',unit:'hs'},
-  {key:'comidas',icon:'ð½ï¸',label:'Comidas',color:'#f97316',getValue:r=>parseInt(r['Comidas'])||null,reduce:'avg',unit:'com',yMax:6},
-  {key:'lectura',icon:'ð',label:'Lectura',color:'#a78bfa',getValue:r=>r['LeÃ­']==='SÃ­'?1:0,reduce:'sum',unit:'dÃ­as'},
+  {key:'suenio',icon:'Ã°ÂÂÂ´',label:'SueÃÂ±o',color:'#8b7fff',getValue:r=>parseFloat(r['Horas sueÃÂ±o'])||null,reduce:'avg',unit:'hs',yMax:12},
+  {key:'gym',icon:'Ã°ÂÂÂÃ¯Â¸Â',label:'Gym',color:'#34d399',getValue:r=>r['Gym']==='SÃÂ­'?1:0,reduce:'sum',unit:'dÃÂ­as'},
+  {key:'estudio',icon:'Ã°ÂÂÂ',label:'Estudio',color:'#60a5fa',getValue:r=>parseFloat(r['Horas estudio'])||null,reduce:'sum',unit:'hs'},
+  {key:'trabajo',icon:'Ã°ÂÂÂ¼',label:'Trabajo',color:'#e879f9',getValue:r=>parseFloat(r['Horas trabajo'])||null,reduce:'sum',unit:'hs'},
+  {key:'comidas',icon:'Ã°ÂÂÂ½Ã¯Â¸Â',label:'Comidas',color:'#f97316',getValue:r=>parseInt(r['Comidas'])||null,reduce:'avg',unit:'com',yMax:6},
+  {key:'lectura',icon:'Ã°ÂÂÂ',label:'Lectura',color:'#a78bfa',getValue:r=>r['LeÃÂ­']==='SÃÂ­'?1:0,reduce:'sum',unit:'dÃÂ­as'},
 ];
 
 function setHorizon(h,btn){
@@ -597,11 +622,11 @@ function setHorizon(h,btn){
 
 function renderPersonal(){
   const rows=userRows(activeUser);
-  if(!rows.length){document.getElementById('stats-cards').innerHTML='<p class="empty">Sin registros aÃºn.</p>';return;}
+  if(!rows.length){document.getElementById('stats-cards').innerHTML='<p class="empty">Sin registros aÃÂºn.</p>';return;}
   const total=rows.length;
   const totalPts=rows.reduce((s,r)=>s+pts(r),0);
-  const avgSleep=(rows.reduce((s,r)=>s+(parseFloat(r['Horas sueÃ±o'])||0),0)/total).toFixed(1);
-  const gymDays=rows.filter(r=>r['Gym']==='SÃ­').length;
+  const avgSleep=(rows.reduce((s,r)=>s+(parseFloat(r['Horas sueÃÂ±o'])||0),0)/total).toFixed(1);
+  const gymDays=rows.filter(r=>r['Gym']==='SÃÂ­').length;
   const weekPts=rows.filter(r=>inRange(r,7)).reduce((s,r)=>s+pts(r),0).toFixed(1);
   const monthPts=rows.filter(r=>inRange(r,30)).reduce((s,r)=>s+pts(r),0).toFixed(1);
   const best=Math.max(...rows.map(r=>pts(r)));
@@ -610,11 +635,11 @@ function renderPersonal(){
     <div class="stat-card"><div class="val">${totalPts.toFixed(0)}</div><div class="lbl">Puntos totales</div></div>
     <div class="stat-card"><div class="val">${weekPts}</div><div class="lbl">Esta semana</div></div>
     <div class="stat-card"><div class="val">${monthPts}</div><div class="lbl">Este mes</div></div>
-    <div class="stat-card"><div class="val">${best}</div><div class="lbl">Mejor dÃ­a</div></div>
-    <div class="stat-card"><div class="val">${avgSleep}h</div><div class="lbl">SueÃ±o prom.</div></div>
-    <div class="stat-card"><div class="val">${gymDays}</div><div class="lbl">DÃ­as gym</div></div>
-    <div class="stat-card"><div class="val">${streak}ð¥</div><div class="lbl">Racha</div></div>
-    <div class="stat-card"><div class="val">${total}</div><div class="lbl">DÃ­as registrados</div></div>
+    <div class="stat-card"><div class="val">${best}</div><div class="lbl">Mejor dÃÂ­a</div></div>
+    <div class="stat-card"><div class="val">${avgSleep}h</div><div class="lbl">SueÃÂ±o prom.</div></div>
+    <div class="stat-card"><div class="val">${gymDays}</div><div class="lbl">DÃÂ­as gym</div></div>
+    <div class="stat-card"><div class="val">${streak}Ã°ÂÂÂ¥</div><div class="lbl">Racha</div></div>
+    <div class="stat-card"><div class="val">${total}</div><div class="lbl">DÃÂ­as registrados</div></div>
   `;
   renderMainChart();
   renderMetricCards(rows);
@@ -678,8 +703,8 @@ function renderDrillChart(key){
   const m=METRICS.find(x=>x.key===key);if(!m)return;
   const rows=userRows(activeUser);
   const{labels,data}=aggregateData(rows,m.getValue,m.reduce);
-  const horizonLbl=horizon==='dias'?'30 dÃ­as':horizon==='semanas'?'12 semanas':'12 meses';
-  document.getElementById('drill-title').textContent=`${m.icon} ${m.label} â ${horizonLbl}`;
+  const horizonLbl=horizon==='dias'?'30 dÃÂ­as':horizon==='semanas'?'12 semanas':'12 meses';
+  document.getElementById('drill-title').textContent=`${m.icon} ${m.label} Ã¢ÂÂ ${horizonLbl}`;
   mkChart('drill-chart','line',{labels,datasets:[{
     data,borderColor:m.color,backgroundColor:`${m.color}22`,
     fill:true,tension:.4,pointRadius:2,pointBackgroundColor:m.color,
@@ -694,15 +719,15 @@ function setPeriod(p,btn){
 }
 function renderLeaderboard(){
   const sorted=[...leaderboard].sort((a,b)=>b[lbPeriod]-a[lbPeriod]);
-  const medals=['ð¥','ð¥','ð¥'];
-  const lbl={esta_semana:'esta semana',este_mes:'este mes',este_anio:'este aÃ±o',total:'histÃ³rico'};
+  const medals=['Ã°ÂÂ¥Â','Ã°ÂÂ¥Â','Ã°ÂÂ¥Â'];
+  const lbl={esta_semana:'esta semana',este_mes:'este mes',este_anio:'este aÃÂ±o',total:'histÃÂ³rico'};
   document.getElementById('lb-grid').innerHTML=sorted.map((u,i)=>`
     <div class="lb-row">
       <div class="lb-rank">${medals[i]||`#${i+1}`}</div>
       <div><div class="lb-name">${u.usuario}</div>
-      <div style="color:#555;font-size:.7rem">${u.dias} dÃ­as Â· mejor: ${u.mejor_dia} pts</div></div>
+      <div style="color:#555;font-size:.7rem">${u.dias} dÃÂ­as ÃÂ· mejor: ${u.mejor_dia} pts</div></div>
       <div class="lb-stats"><div class="lb-main">${u[lbPeriod]}</div><div class="lb-sub">${lbl[lbPeriod]}</div></div>
-    </div>`).join('')||'<p class="empty">Sin datos aÃºn.</p>';
+    </div>`).join('')||'<p class="empty">Sin datos aÃÂºn.</p>';
 }
 
 function renderCompare(){
@@ -713,12 +738,12 @@ function renderCompare(){
     {name:'Esta semana',me:me.filter(r=>inRange(r,7)).reduce((s,r)=>s+pts(r),0),them:them.filter(r=>inRange(r,7)).reduce((s,r)=>s+pts(r),0)},
     {name:'Este mes',me:me.filter(r=>inRange(r,30)).reduce((s,r)=>s+pts(r),0),them:them.filter(r=>inRange(r,30)).reduce((s,r)=>s+pts(r),0)},
     {name:'Total',me:me.reduce((s,r)=>s+pts(r),0),them:them.reduce((s,r)=>s+pts(r),0)},
-    {name:'Mejor dÃ­a',me:Math.max(0,...me.map(r=>pts(r))),them:Math.max(0,...them.map(r=>pts(r)))},
+    {name:'Mejor dÃÂ­a',me:Math.max(0,...me.map(r=>pts(r))),them:Math.max(0,...them.map(r=>pts(r)))},
   ];
   document.getElementById('cmp-cards').innerHTML=metrics.map(m=>{
     const d=m.me-m.them;
     const sign=d>0?`<span class="up">+${d.toFixed(1)}</span>`:d<0?`<span class="down">${d.toFixed(1)}</span>`:`<span style="color:#555">empate</span>`;
-    return`<div class="cmp-card"><h3>${m.name}</h3><div class="main-val">${m.me.toFixed(1)}</div><div class="vs">${label}: ${m.them.toFixed(1)} Â· ${sign}</div></div>`;
+    return`<div class="cmp-card"><h3>${m.name}</h3><div class="main-val">${m.me.toFixed(1)}</div><div class="vs">${label}: ${m.them.toFixed(1)} ÃÂ· ${sign}</div></div>`;
   }).join('');
   const days30=Array.from({length:30},(_,i)=>daysAgo(29-i));
   function cumPts(rows){let acc=0;return days30.map(d=>{const r=rows.find(x=>x['Fecha']===d);acc+=r?pts(r):0;return parseFloat(acc.toFixed(1));});}
@@ -735,10 +760,10 @@ function renderHistorial(){
   if(!rows.length){document.getElementById('hist-tbody').innerHTML='<tr><td colspan="9" class="empty">Sin registros.</td></tr>';return;}
   document.getElementById('hist-tbody').innerHTML=rows.map(r=>`
     <tr><td>${r['Fecha']}</td><td class="pts">${pts(r)}</td>
-    <td>${r['Horas sueÃ±o']||'â'}h</td><td>${badge(r['Gym'])}</td>
-    <td>${r['Horas estudio']||'â'}h</td><td>${r['Horas trabajo']||'â'}h</td>
-    <td>${r['Comidas']||'â'}</td><td>${badge(r['LeÃ­'])}</td>
-    <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis">${r['Notas']||'â'}</td></tr>`).join('');
+    <td>${r['Horas sueÃÂ±o']||'Ã¢ÂÂ'}h</td><td>${badge(r['Gym'])}</td>
+    <td>${r['Horas estudio']||'Ã¢ÂÂ'}h</td><td>${r['Horas trabajo']||'Ã¢ÂÂ'}h</td>
+    <td>${r['Comidas']||'Ã¢ÂÂ'}</td><td>${badge(r['LeÃÂ­'])}</td>
+    <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis">${r['Notas']||'Ã¢ÂÂ'}</td></tr>`).join('');
 }
 
 init().catch(console.error);
